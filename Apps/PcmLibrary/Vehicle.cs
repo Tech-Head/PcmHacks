@@ -568,8 +568,8 @@ namespace PcmHacking
 
                 await toolPresentNotifier.Notify();
 
-                // TODO: instead of this hard-coded 0xFF9150, get the base address from the PcmInfo object.
-                if (!await PCMExecute(response.Value, 0xFF9150, cancellationToken))
+                // TODO: instead of this hard-coded 0xFF913E, get the base address from the PcmInfo object.
+                if (!await PCMExecute(response.Value, 0xFF913E, cancellationToken))
                 {
                     logger.AddUserMessage("Failed to upload kernel to PCM");
 

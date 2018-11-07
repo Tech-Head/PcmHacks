@@ -372,7 +372,7 @@ namespace PcmHacking
                 {
                     throw new ApplicationException(
                         string.Format(
-                            "Block should contain {0} bytes, actually contains {1} bytes.",
+                            "Block should contain {0} bytes, but actually contains {1} bytes. The connection to the PCM was interrupted.",
                             PayloadLength + overhead,
                             Block.Length));
                 }

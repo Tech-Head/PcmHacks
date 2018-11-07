@@ -357,14 +357,26 @@ namespace PcmHacking
 
             return Response.Create(ResponseStatus.Success, result);
         }
-        //TODO: use the copy of this function in VPW.cs
+
+        // TODO: use the copy of this function in VPW.cs
+        // Not sure why this one ignores the last few bytes (10 bytes of overhead - why?)
         public UInt16 CalcBlockChecksum(byte[] Block)
         {
             UInt16 Sum = 0;
             int PayloadLength = (Block[5] << 8) + Block[6];
 
-            for (int i = 4; i < PayloadLength + 10; i++) // start after prio, dest, src, mode, stop at end of payload
+            const int overhead = 10;
+            for (int i = 4; i < PayloadLength + overhead; i++) // start after prio, dest, src, mode, stop at end of payload
             {
+                if (i >= Block.Length)
+                {
+                    throw new ApplicationException(
+                        string.Format(
+                            "Block should contain {0} bytes, actually contains {1} bytes.",
+                            PayloadLength + overhead,
+                            Block.Length));
+                }
+
                 Sum += Block[i];
             }
 
